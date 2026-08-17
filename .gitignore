@@ -219,3 +219,6 @@ __marimo__/
 
 # Dataset (downloaded locally, not committed to the repo)
 data/
+
+# Preprocessed arrays generated for Sagemaker upload (large binary files)
+sagemaker_data/

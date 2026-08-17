@@ -79,4 +79,13 @@ The full version of this section, with more detail and direct ties to the notebo
 
 ## Deployment
 
-Training and deployment to a Sagemaker endpoint is in progress.
+I trained the winning CNN (with pooling) on Amazon Sagemaker, using an AWS Academy Learner Lab account, orchestrated from [`sagemaker/train_and_deploy.ipynb`](sagemaker/train_and_deploy.ipynb):
+
+- Training ran on an `ml.m5.large` instance, 616 billable seconds (about 10.3 minutes) for 15 epochs.
+- Test accuracy: 52.58% (test loss 2.5045), close to the 51.87% from the local run, the difference is just normal run-to-run randomness.
+- I deployed the trained model to a real-time Sagemaker endpoint and sent it a preprocessed test image, it returned a valid probability distribution over the 7 classes (highest: "happy" at 58%), confirming the model serves predictions correctly.
+- I deleted the endpoint immediately after testing it, since Sagemaker endpoints bill hourly while active.
+
+![Sagemaker training job completed](assets/image.png)
+
+`sagemaker/train.py` has the training script (same architecture as `cnn_model` in the main notebook), and `sagemaker/train_and_deploy.ipynb` has the full workflow: uploading data to S3, launching the training job, deploying, testing, and cleanup.
